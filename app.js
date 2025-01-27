@@ -13,7 +13,6 @@ let currentQuery = '';
 let currentSearchType = 'title';
 let isLoading = false;
 
-// Evento para manejar la búsqueda
 searchForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   currentQuery = searchInput.value.trim();
@@ -24,7 +23,6 @@ searchForm.addEventListener('submit', async (e) => {
   await fetchBooks();
 });
 
-// Evento para cargar más resultados
 loadMoreBtn.addEventListener('click', async () => {
   if (isLoading) return;
   isLoading = true;
@@ -37,12 +35,10 @@ loadMoreBtn.addEventListener('click', async () => {
   loadMoreBtn.classList.remove('loading');
 });
 
-// Evento para cerrar el modal
 closeModalBtn.addEventListener('click', () => {
   modal.classList.add('hidden');
 });
 
-// Función para buscar libros
 async function fetchBooks(append = false) {
   const url = `https://openlibrary.org/search.json?${currentSearchType}=${encodeURIComponent(currentQuery)}&page=${currentPage}`;
   try {
@@ -58,7 +54,6 @@ async function fetchBooks(append = false) {
   }
 }
 
-// Función para mostrar los resultados
 function displayResults(books) {
   if (!books.length) {
     resultsDiv.innerHTML = '<p>No se encontraron libros.</p>';
@@ -66,7 +61,7 @@ function displayResults(books) {
   }
 
   if (currentPage === 1) {
-    resultsDiv.innerHTML = ''; // Limpiar resultados previos solo en la primera página
+    resultsDiv.innerHTML = ''; 
   }
 
   books.forEach((book) => {
@@ -85,7 +80,6 @@ function displayResults(books) {
       </div>
     `;
 
-    // Evento para mostrar el modal al hacer clic
     bookElement.addEventListener('click', () => {
       showBookModal(book);
     });
@@ -94,12 +88,10 @@ function displayResults(books) {
   });
 }
 
-// Función para mostrar/ocultar el botón de cargar más
 function toggleLoadMore(show) {
   loadMoreBtn.style.display = show ? 'block' : 'none';
 }
 
-// Función para mostrar el modal con detalles del libro
 function showBookModal(book) {
     const coverUrl = book.cover_i
       ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
